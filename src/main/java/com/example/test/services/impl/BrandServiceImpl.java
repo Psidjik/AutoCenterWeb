@@ -1,6 +1,7 @@
 package com.example.test.services.impl;
 
 import com.example.test.dtos.BrandDto;
+import com.example.test.dtos.ModelDto;
 import com.example.test.models.Brand;
 import com.example.test.repositories.BrandRepository;
 import com.example.test.services.BrandService;
@@ -29,7 +30,7 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = modelMapper.map(brandDto, Brand.class);
         brand.setCreated(LocalDateTime.now());
         brand.setModified(LocalDateTime.now());
-        brandRepository.save(brand);
+        brandRepository.saveAndFlush(brand);
     }
 
     @Override
@@ -59,6 +60,11 @@ public class BrandServiceImpl implements BrandService {
         brand.setModified(LocalDateTime.now());
         brandRepository.save(brand);
         return modelMapper.map(brand, BrandDto.class);
+    }
+
+    @Override
+    public List<String> numberOfModels(String name) {
+        return brandRepository.numberOfModels(name);
     }
 
     @Autowired

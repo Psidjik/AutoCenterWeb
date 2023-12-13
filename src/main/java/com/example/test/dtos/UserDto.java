@@ -1,28 +1,27 @@
 package com.example.test.dtos;
-
-
+import com.example.test.models.enums.Role;
+import com.example.test.util.UniqueUsername;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class UserDto {
-    private UserRoleDto role;
+    private Role role;
     private boolean is_active;
     private String firstName;
-    private String imageUrl;
+//    private String imageUrl;
     private String last_name;
     private String password;
+    @UniqueUsername
     private String username;
 
 
-        public UserDto(UserRoleDto role,
-                   boolean is_active, String firstName, String imageUrl, String last_name, String password, String username) {
+        public UserDto(Role role,
+                   boolean is_active, String firstName, String last_name, String password, String username) {
 
         this.role = role;
         this.is_active = is_active;
         this.firstName = firstName;
-        this.imageUrl = imageUrl;
+//        this.imageUrl = imageUrl;
         this.last_name = last_name;
         this.password = password;
         this.username = username;
@@ -33,11 +32,11 @@ public class UserDto {
 
 
 
-    public UserRoleDto getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(UserRoleDto role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -58,14 +57,14 @@ public class UserDto {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    @NotBlank(message = "ImageURL cannot be empty")
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+//    @NotBlank(message = "ImageURL cannot be empty")
+//    public String getImageUrl() {
+//        return imageUrl;
+//    }
+//
+//    public void setImageUrl(String imageUrl) {
+//        this.imageUrl = imageUrl;
+//    }
     @NotBlank(message = "LastName cannot be empty")
     @Length(min = 2, message = "LastName must be more than two characters")
     public String getLast_name() {
@@ -101,7 +100,7 @@ public class UserDto {
                 ", role=" + role +
                 ", is_active=" + is_active +
                 ", firstName='" + firstName + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
+//                ", imageUrl='" + imageUrl + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +

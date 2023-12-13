@@ -20,12 +20,11 @@
                         <h4 th:text="'Image URL: ' + ${modelDetails.imageUrl}"></h4>
                         <h4 th:text="'Category: ' + ${modelDetails.category}"></h4>
                         <h4 th:text="'Brand: ' + *{modelDetails.brand}"></h4>
-<!--TODO выводится весь объект brand с ID исправить!-->
-                        <div class="align-bottom">
-                            <a class="btn btn-danger align-bottom"
-                               th:href="@{/model/model-delete{model-name}(model-name=${modelDetails.name})}">Delete
-                                employee</a>
-                        </div>
+<!--                        <div class="align-bottom">-->
+<!--                            <a class="btn btn-danger align-bottom"-->
+<!--                               th:href="@{/model/model-delete{model-name}(model-name=${modelDetails.name})}">Delete-->
+<!--                                employee</a>-->
+<!--                        </div>-->
                     </div>
 <!--                    <div class="col-md-6"><img src="/pic/employee.png" height="350px"></div>-->
                 </div>

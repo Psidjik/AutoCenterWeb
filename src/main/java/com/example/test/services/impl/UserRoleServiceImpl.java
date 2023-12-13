@@ -24,11 +24,9 @@ public class UserRoleServiceImpl implements UserRoleService {
     ModelMapper modelMapper;
 
     @Override
-    public UserRoleDto addNewUserRole(UserRoleDto userRoleDto) {
-        //TODO начинаем с юзер роли и после делаем юзера
-
-        return modelMapper.map(userRoleRepository.save(modelMapper.map(userRoleDto, UserRole.class)), UserRoleDto.class);
-//        return null;
+    public void addNewUserRole(UserRoleDto userRoleDto) {
+        UserRole userRole = modelMapper.map(userRoleDto, UserRole.class);
+        userRoleRepository.saveAndFlush(userRole);
     }
     @Override
     public UserRoleDto getUserRoleById(String id){

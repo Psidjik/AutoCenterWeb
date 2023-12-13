@@ -1,6 +1,7 @@
 package com.example.test.repositories;
 
 import com.example.test.models.Brand;
+import com.example.test.models.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,6 @@ public interface BrandRepository extends JpaRepository<Brand, String> {
 //    List<Brand> findAllByName(String name);
 
     Optional<Brand> findByName(String name);
+    @Query("SELECT m.name FROM Model m JOIN m.brand b WHERE b.name = :name")
+    List<String> numberOfModels(String name);
 }

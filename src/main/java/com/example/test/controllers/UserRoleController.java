@@ -3,6 +3,7 @@ package com.example.test.controllers;
 import com.example.test.models.enums.Role;
 import com.example.test.dtos.UserRoleDto;
 import com.example.test.services.UserRoleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +16,21 @@ import java.util.UUID;
 public class UserRoleController {
     private UserRoleService userRoleService;
 
-    @ModelAttribute("iserRoleDto")
-    public UserRoleDto addUserRole(){
+    @ModelAttribute("userRoleDto")
+    public UserRoleDto initBrand(){
         return new UserRoleDto();
     }
 
-//    @GetMapping("/add")
-//    String addUserRole(){
-//        return "userrole-add";}
+    @GetMapping("/add")
+    String addUserRole(){
+        return "userrole-add";
+    }
+
+    @PostMapping("/add")
+    String addUserRole(@Valid UserRoleDto userRoleDto){
+        userRoleService.addNewUserRole(userRoleDto);
+        return "redirect:/";
+    }
 
     @GetMapping("/all")
     List<UserRoleDto> getAllUserRole(){
@@ -32,9 +40,7 @@ public class UserRoleController {
     UserRoleDto getUserRoleById(@PathVariable String id){
         return userRoleService.getUserRoleById(id);
     }
-    @PostMapping("/add")
-    UserRoleDto addUserRole(@RequestBody UserRoleDto userRoleDto){
-        return userRoleService.addNewUserRole(userRoleDto);}
+
     @DeleteMapping("/delete/{id}")
     String deleteUserRole(@PathVariable String id){
         userRoleService.deleteUserRoleById(id);

@@ -6,7 +6,7 @@ import com.example.test.dtos.UserRoleDto;
 import java.util.List;
 
 public interface UserRoleService {
-    UserRoleDto addNewUserRole(UserRoleDto userRoleDto);
+    void addNewUserRole(UserRoleDto userRoleDto);
     UserRoleDto getUserRoleById(String id);
     void deleteUserRoleById(String id);
     List<UserRoleDto> getAllUserRole();

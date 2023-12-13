@@ -9,7 +9,6 @@ public class UserViewModel {
     private String username;
     private String firstName;
     private String last_name;
-    private String imageUrl;
 
     public String getUsername() {
         return username;
@@ -35,21 +34,12 @@ public class UserViewModel {
         this.last_name = last_name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     @Override
     public String toString() {
         return "UserViewModel{" +
                 "username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", last_name='" + last_name + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }

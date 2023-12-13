@@ -18,4 +18,6 @@ public interface BrandService {
     BrandViewModel getBrandByName(String name);
     List<BrandDto> getAllBrands();
     BrandDto updateBrandName(String id, String name);
+
+    List<String> numberOfModels(String name);
 }

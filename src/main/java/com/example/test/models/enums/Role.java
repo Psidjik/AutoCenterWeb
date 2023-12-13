@@ -1,7 +1,7 @@
 package com.example.test.models.enums;
 
 public enum Role {
-    USER(0), CLIENT(1) ,ADMIN(2);
+    CLIENT(0), ADMIN(1);
 
     private int value;
 

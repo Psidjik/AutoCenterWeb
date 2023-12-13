@@ -39,7 +39,7 @@ public class Offer extends BaseEntity {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "model_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "model_id", referencedColumnName = "id")
     public Model getModel() {
         return model;
     }
@@ -48,7 +48,7 @@ public class Offer extends BaseEntity {
     }
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     public User getUser() {
         return user;
     }

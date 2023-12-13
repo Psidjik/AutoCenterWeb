@@ -4,6 +4,7 @@ import com.example.test.dtos.BrandDto;
 import com.example.test.dtos.ModelDto;
 import com.example.test.services.BrandService;
 import com.example.test.dtos.views.BrandViewModel;
+import com.example.test.services.OfferService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/brand")
 public class BrandController {
     private BrandService brandService;
+
+    private OfferService offerService;
 
     @ModelAttribute("brandDto")
     public BrandDto initBrand() {
@@ -47,13 +50,20 @@ public class BrandController {
     @PutMapping("/{id}/{name}")
     BrandDto updateBrandName(@PathVariable String id, @Valid @PathVariable String name){
         return brandService.updateBrandName(id, name);}
-    @GetMapping("/brand-details/{name}")
+    @GetMapping("/details/{name}")
     String getBrandByName(@PathVariable("name") String name, Model model){
         model.addAttribute("brandDetails", brandService.getBrandByName(name));
+//        model.addAttribute("offers", offerService.findOffersByBrandName(name));
+        model.addAttribute("numberOfModels", brandService.numberOfModels(name));
+        //todo выводить название моделей для этого бренда и сделать ссылку на полное описание модели
         return "brand-details";
     }
     @Autowired
     public void setBrandService(BrandService brandService) {
         this.brandService = brandService;
+    }
+    @Autowired
+    public void setOfferService(OfferService offerService) {
+        this.offerService = offerService;
     }
 }

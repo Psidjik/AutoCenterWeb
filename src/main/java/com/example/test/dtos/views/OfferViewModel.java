@@ -4,6 +4,7 @@ import com.example.test.models.enums.Engine;
 import com.example.test.models.enums.Transmission;
 
 public class OfferViewModel {
+    private String id;
     private String description;
     private Engine engine;
     private String image_url;
@@ -12,6 +13,13 @@ public class OfferViewModel {
     private Transmission transmission;
     private int years;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getDescription() {
         return description;

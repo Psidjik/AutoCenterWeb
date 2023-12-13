@@ -10,14 +10,12 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 public class OfferDto{
-    private UUID id;
-    private LocalDateTime modified;
-    private LocalDateTime created;
-    private ModelDto model;
-    private UserDto user;
+    private String id;
+    private String model;
+    private String user;
     private String description;
     private Engine engine;
-    private String image_url;
+//    private String image_url;
     private int mileage;
     private double price;
     private Transmission transmission;
@@ -26,60 +24,82 @@ public class OfferDto{
     public OfferDto() {
     }
 
-    public OfferDto(LocalDateTime modified, LocalDateTime created, ModelDto model, UserDto user,
-                    String description, Engine engine, String image_url, int mileage, double price, Transmission transmission, int years) {
-        this.modified = modified;
-        this.created = created;
+//    public OfferDto(LocalDateTime created, ModelDto model, UserDto user,
+//                    String description, Engine engine, int mileage, double price, Transmission transmission, int years) {
+//
+//        this.created = created;
+//        this.model = model;
+//        this.user = user;
+//        this.description = description;
+//        this.engine = engine;
+////        this.image_url = image_url;
+//        this.mileage = mileage;
+//        this.price = price;
+//        this.transmission = transmission;
+//        this.years = years;
+//    }
+
+
+    public OfferDto(String id, String model, String user, String description, Engine engine, int mileage, double price, Transmission transmission, int years) {
+        this.id = id;
         this.model = model;
         this.user = user;
         this.description = description;
         this.engine = engine;
-        this.image_url = image_url;
         this.mileage = mileage;
         this.price = price;
         this.transmission = transmission;
         this.years = years;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(LocalDateTime modified) {
-        this.modified = modified;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public ModelDto getModel() {
+    public String getModel() {
         return model;
     }
 
-    public void setModel(ModelDto model) {
+    public void setModel(String model) {
         this.model = model;
     }
 
-    public UserDto getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(UserDto user) {
+    public void setUser(String user) {
         this.user = user;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+//    public LocalDateTime getCreated() {
+//        return created;
+//    }
+//
+//    public void setCreated(LocalDateTime created) {
+//        this.created = created;
+//    }
+
+//    public ModelDto getModel() {
+//        return model;
+//    }
+//
+//    public void setModel(ModelDto model) {
+//        this.model = model;
+//    }
+//
+//    public UserDto getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(UserDto user) {
+//        this.user = user;
+//    }
     @NotBlank
     @Length(min = 10, message = "Brand name must be more ten characters")
     public String getDescription() {
@@ -98,13 +118,13 @@ public class OfferDto{
         this.engine = engine;
     }
 
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
-    }
+//    public String getImage_url() {
+//        return image_url;
+//    }
+//
+//    public void setImage_url(String image_url) {
+//        this.image_url = image_url;
+//    }
     @NotNull
     @Min(value = 1, message = "The mileage cannot be less than 1")
     public int getMileage() {
@@ -146,13 +166,10 @@ public class OfferDto{
     public String toString() {
         return "OfferDto{" +
                 "id=" + id +
-                ", modified=" + modified +
-                ", created=" + created +
                 ", model=" + model +
                 ", user=" + user +
                 ", description='" + description + '\'' +
                 ", engine=" + engine +
-                ", image_url='" + image_url + '\'' +
                 ", mileage=" + mileage +
                 ", price=" + price +
                 ", transmission=" + transmission +

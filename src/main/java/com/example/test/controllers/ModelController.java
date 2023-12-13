@@ -20,6 +20,8 @@ import java.util.UUID;
 public class ModelController {
     private ModelService modelService;
 
+    //TODO сделать страничку в которой будет реализована фильтрация по всем modelBrandViewModel
+
     @ModelAttribute("modelDto")
     public ModelDto initBrand() {
         return new ModelDto();
@@ -27,7 +29,7 @@ public class ModelController {
 
     @GetMapping("/add")
     public String addModel(Model model) {
-        model.addAttribute("availableBrands", modelService.showBrand());
+            model.addAttribute("availableBrands", modelService.showBrand());
         return "model-add";
     }
 
