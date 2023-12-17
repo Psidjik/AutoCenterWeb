@@ -9,6 +9,9 @@ import com.example.test.services.ModelService;
 import com.example.test.dtos.views.ModelViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +20,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class ModelServiceImpl implements ModelService {
 
     ModelRepository modelRepository;
@@ -28,6 +32,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "models", allEntries = true)
     public void addNewModel(ModelDto modelDto) {
         Model model = modelMapper.map(modelDto, Model.class);
         model.setBrand(brandRepository.findByName(modelDto.getBrand()).orElseThrow());
@@ -37,6 +42,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    @Cacheable("models")
     public ModelDto getModelByName(String name) {
         return modelMapper.map(modelRepository.findByName(name), ModelDto.class);
     }
@@ -47,6 +53,7 @@ public class ModelServiceImpl implements ModelService {
 //    }
 
     @Override
+    @CacheEvict(cacheNames = "models", allEntries = true)
     public ModelDto updateModelName(String uuid, String name) {
         Model model = modelRepository.findById(uuid).orElseThrow();
         model.setName(name);
@@ -56,15 +63,18 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    @Cacheable("models")
     public List<ModelViewModel> getAllModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ModelViewModel.class)).collect(Collectors.toList());
     }
     @Override
+    @CacheEvict(cacheNames = "models", allEntries = true)
     public void deleteModelById(String id) {
         modelRepository.deleteById(id);
     }
 
     @Override
+    @Cacheable("models")
     public List<BrandDto> showBrand() {
         return brandRepository.findAll().stream().map(brand -> modelMapper.map(brand, BrandDto.class)).collect(Collectors.toList());
     }

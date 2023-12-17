@@ -55,7 +55,6 @@ public class BrandController {
         model.addAttribute("brandDetails", brandService.getBrandByName(name));
 //        model.addAttribute("offers", offerService.findOffersByBrandName(name));
         model.addAttribute("numberOfModels", brandService.numberOfModels(name));
-        //todo выводить название моделей для этого бренда и сделать ссылку на полное описание модели
         return "brand-details";
     }
     @Autowired

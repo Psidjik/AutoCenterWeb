@@ -14,6 +14,9 @@ import com.example.test.services.UserService;
 import com.example.test.dtos.views.UserViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -38,6 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public void addNewUser(UserDto userDto) {
 
         User user = modelMapper.map(userDto, User.class);
@@ -59,16 +64,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable("users")
     public UserViewModel getUserById(String id) {
         return modelMapper.map(userRepository.findById(id), UserViewModel.class);
     }
 
     @Override
+    @Cacheable("users")
     public List<UserRole> showAllRole(){
         return userRoleRepository.findAll().stream().collect(Collectors.toList());
     }
 
     @Override
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public void deleteUserById(String id) {
         userRepository.deleteById(id);
     }
@@ -79,6 +87,7 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public UserDto updateUserFirstName(String id, String firstName) {
         User user = userRepository.findById(id).orElseThrow();
         user.setFirstName(firstName);
@@ -87,19 +96,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable("users")
     public List<OfferViewModelForUser> getOffersByUsername(String username) {
         List<OfferViewModelForUser> offerViewModelForUser = userRepository.findOffers(username).stream().map(offer -> modelMapper.map(offer, OfferViewModelForUser.class)).collect(Collectors.toList());
         return offerViewModelForUser;
     }
 
     @Override
+    @Cacheable("users")
     public UserDto getUserByUsername(String username) {
         return modelMapper.map(userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(username + " not found!")), UserDto.class);
     }
-
-
-
     @Override
+    @Cacheable("users")
     public List<UserViewModel> getAllUser() {
         return userRepository.findAll().stream().map(user -> modelMapper.map(user,UserViewModel.class)).collect(Collectors.toList());
     }

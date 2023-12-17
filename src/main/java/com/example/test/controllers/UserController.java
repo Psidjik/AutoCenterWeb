@@ -70,10 +70,6 @@ public class UserController {
         String username = principal.getName();
         UserDto user = userService.getUserByUsername(username);
         List<OfferViewModelForUser> offers = userService.getOffersByUsername(username);
-//        model.addAttribute("user", user);
-////        model.addAttribute("userOffers", offers);
-//
-//        return "profile";
         model.addAttribute("userDetail", user);
         model.addAttribute("offers", offers);
         return "user-details";

@@ -13,6 +13,9 @@ import com.example.test.services.OfferService;
 import com.example.test.dtos.views.OfferViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +24,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class OfferServiceImpl implements OfferService {
     OfferRepository offerRepository;
     ModelRepository modelRepository;
@@ -31,6 +35,7 @@ public class OfferServiceImpl implements OfferService {
     ModelMapper modelMapper;
 
     @Override
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void addNewOffer(OfferDto offerDto) {
         Offer offer = modelMapper.map(offerDto, Offer.class);
         offer.setModel(modelRepository.findByName(offerDto.getModel()).orElseThrow());
@@ -41,11 +46,13 @@ public class OfferServiceImpl implements OfferService {
 
     }
     @Override
+    @Cacheable("offers")
     public OfferDto getOfferById(String id) {
         return modelMapper.map(offerRepository.findById(id), OfferDto.class);
     }
 
     @Override
+    @CacheEvict(cacheNames = "offers", allEntries = true)
     public void deleteOfferById(String id) {
     offerRepository.deleteById(id);
     }
@@ -59,21 +66,25 @@ public class OfferServiceImpl implements OfferService {
 //    }
 
     @Override
+    @Cacheable("offers")
     public List<OfferViewModel> getAllOffer() {
         return offerRepository.findAll().stream().map(offer -> modelMapper.map(offer, OfferViewModel.class)).collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable("offers")
     public List<OfferViewModel> findOffersByBrandName(String brandName) {
         return offerRepository.findOffersByBrandName(brandName).stream().map(offer -> modelMapper.map(offer, OfferViewModel.class)).collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable("offers")
     public List<UserDto> showUsers() {
         return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable("offers")
     public List<ModelDto> showModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ModelDto.class)).collect(Collectors.toList());
     }

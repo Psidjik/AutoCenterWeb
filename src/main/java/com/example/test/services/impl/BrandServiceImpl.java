@@ -9,6 +9,9 @@ import com.example.test.util.ValidationUtil;
 import com.example.test.dtos.views.BrandViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableCaching
 public class BrandServiceImpl implements BrandService {
     private BrandRepository brandRepository;
     private ModelMapper modelMapper;
@@ -26,6 +30,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public void addNewBrand(BrandDto brandDto) {
         Brand brand = modelMapper.map(brandDto, Brand.class);
         brand.setCreated(LocalDateTime.now());
@@ -34,26 +39,31 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Cacheable("brands")
     public BrandViewModel getBrandById(String id) {
         return modelMapper.map(brandRepository.findById(id), BrandViewModel.class);
     }
 
     @Override
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public void deleteBrandById(String id) {
         brandRepository.deleteById(id);
     }
 
     @Override
+    @Cacheable("brands")
     public BrandViewModel getBrandByName(String name) {
         return modelMapper.map(brandRepository.findByName(name).orElseThrow(), BrandViewModel.class);
     }
 
     @Override
+    @Cacheable("brands")
     public List<BrandDto> getAllBrands() {
         return brandRepository.findAll().stream().map(brand -> modelMapper.map(brand, BrandDto.class)).collect(Collectors.toList());
     }
 
     @Override
+    @CacheEvict(cacheNames = "brands", allEntries = true)
     public BrandDto updateBrandName(String uuid, String name) {
         Brand brand = brandRepository.findById(uuid).orElseThrow();
         brand.setName(name);
@@ -63,6 +73,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Cacheable("brands")
     public List<String> numberOfModels(String name) {
         return brandRepository.numberOfModels(name);
     }
