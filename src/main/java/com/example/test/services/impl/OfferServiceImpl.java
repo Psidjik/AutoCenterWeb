@@ -46,7 +46,6 @@ public class OfferServiceImpl implements OfferService {
 
     }
     @Override
-    @Cacheable("offers")
     public OfferDto getOfferById(String id) {
         return modelMapper.map(offerRepository.findById(id), OfferDto.class);
     }
@@ -72,19 +71,16 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    @Cacheable("offers")
     public List<OfferViewModel> findOffersByBrandName(String brandName) {
         return offerRepository.findOffersByBrandName(brandName).stream().map(offer -> modelMapper.map(offer, OfferViewModel.class)).collect(Collectors.toList());
     }
 
     @Override
-    @Cacheable("offers")
     public List<UserDto> showUsers() {
         return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    @Cacheable("offers")
     public List<ModelDto> showModels() {
         return modelRepository.findAll().stream().map(model -> modelMapper.map(model, ModelDto.class)).collect(Collectors.toList());
     }

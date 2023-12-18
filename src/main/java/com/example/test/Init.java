@@ -44,11 +44,13 @@ public class Init implements CommandLineRunner {
     }
 
     private void initAdmin(){
-       UserRole admin = userRoleRepository.findUserRoleByRole(Role.ADMIN);
+        if(userRepository.count() == 0) {
+            UserRole admin = userRoleRepository.findUserRoleByRole(Role.ADMIN);
 
-       User adminUser = new User(LocalDateTime.now(), LocalDateTime.now(), admin, true, "admin", "1234567", "adminka",  passwordEncoder.encode("admin"),"admin");
+            User adminUser = new User(LocalDateTime.now(), LocalDateTime.now(), admin, true, "admin", "1234567", "adminka", passwordEncoder.encode("admin"), "admin");
 
-       userRepository.save(adminUser);
+            userRepository.save(adminUser);
+        }
     }
 
 }

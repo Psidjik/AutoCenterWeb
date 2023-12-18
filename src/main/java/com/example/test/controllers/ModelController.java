@@ -5,6 +5,8 @@ import com.example.test.services.ModelService;
 
 import com.example.test.dtos.views.ModelViewModel;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +22,8 @@ import java.util.UUID;
 public class ModelController {
     private ModelService modelService;
 
-    //TODO сделать страничку в которой будет реализована фильтрация по всем modelBrandViewModel
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
+
 
     @ModelAttribute("modelDto")
     public ModelDto initBrand() {

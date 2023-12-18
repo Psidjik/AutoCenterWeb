@@ -39,7 +39,6 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @Cacheable("brands")
     public BrandViewModel getBrandById(String id) {
         return modelMapper.map(brandRepository.findById(id), BrandViewModel.class);
     }
@@ -51,7 +50,6 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @Cacheable("brands")
     public BrandViewModel getBrandByName(String name) {
         return modelMapper.map(brandRepository.findByName(name).orElseThrow(), BrandViewModel.class);
     }
@@ -73,7 +71,6 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    @Cacheable("brands")
     public List<String> numberOfModels(String name) {
         return brandRepository.numberOfModels(name);
     }

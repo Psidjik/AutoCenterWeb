@@ -4,6 +4,8 @@ import com.example.test.models.enums.Role;
 import com.example.test.dtos.UserRoleDto;
 import com.example.test.services.UserRoleService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/userrole")
 public class UserRoleController {
     private UserRoleService userRoleService;
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @ModelAttribute("userRoleDto")
     public UserRoleDto initBrand(){

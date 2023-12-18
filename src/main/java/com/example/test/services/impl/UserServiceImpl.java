@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable("users")
     public UserViewModel getUserById(String id) {
         return modelMapper.map(userRepository.findById(id), UserViewModel.class);
     }
@@ -96,14 +95,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable("users")
     public List<OfferViewModelForUser> getOffersByUsername(String username) {
         List<OfferViewModelForUser> offerViewModelForUser = userRepository.findOffers(username).stream().map(offer -> modelMapper.map(offer, OfferViewModelForUser.class)).collect(Collectors.toList());
         return offerViewModelForUser;
     }
 
     @Override
-    @Cacheable("users")
     public UserDto getUserByUsername(String username) {
         return modelMapper.map(userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException(username + " not found!")), UserDto.class);
     }

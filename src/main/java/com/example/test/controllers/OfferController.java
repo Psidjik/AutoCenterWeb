@@ -5,6 +5,8 @@ import com.example.test.models.User;
 import com.example.test.services.OfferService;
 import com.example.test.dtos.views.OfferViewModel;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import java.util.UUID;
 @RequestMapping("/offer")
 public class OfferController {
     private OfferService offerService;
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @ModelAttribute("offerDto")
     public OfferDto initOffer(){

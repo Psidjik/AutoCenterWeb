@@ -6,10 +6,16 @@ import com.example.test.services.BrandService;
 import com.example.test.dtos.views.BrandViewModel;
 import com.example.test.services.OfferService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/brand")
@@ -17,6 +23,8 @@ public class BrandController {
     private BrandService brandService;
 
     private OfferService offerService;
+
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
 
     @ModelAttribute("brandDto")
     public BrandDto initBrand() {
@@ -29,12 +37,14 @@ public class BrandController {
     }
 
     @PostMapping("/add")
-    String addBrand(@Valid BrandDto brandDto){
+    String addBrand(@Valid BrandDto brandDto, Principal principal){
+        LOG.log(Level.INFO, "Add new brand for " + principal.getName());
         brandService.addNewBrand(brandDto);
         return "redirect:/";
     }
     @GetMapping("/all")
-    String getAllBrand(Model model){
+    String getAllBrand(Model model, Principal principal){
+        LOG.log(Level.INFO, "Show all brands for " + principal.getName());
         model.addAttribute("allBrand", brandService.getAllBrands());
         return "brand-all";
     }
@@ -52,9 +62,13 @@ public class BrandController {
         return brandService.updateBrandName(id, name);}
     @GetMapping("/details/{name}")
     String getBrandByName(@PathVariable("name") String name, Model model){
+        System.out.println(name);
+        List<String> modelsName = brandService.numberOfModels(name);
+        System.out.println(modelsName);
         model.addAttribute("brandDetails", brandService.getBrandByName(name));
 //        model.addAttribute("offers", offerService.findOffersByBrandName(name));
-        model.addAttribute("numberOfModels", brandService.numberOfModels(name));
+
+        model.addAttribute("numberOfModels", modelsName);
         return "brand-details";
     }
     @Autowired

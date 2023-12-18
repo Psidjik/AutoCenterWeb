@@ -12,6 +12,8 @@ import com.example.test.models.enums.Role;
 import com.example.test.services.UserRoleService;
 import com.example.test.services.UserService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     private UserService userService;
-
+    private static final Logger LOG = LogManager.getLogger(Controller.class);
     @ModelAttribute("userDto")
     public UserDto initUser() {
         return new UserDto();

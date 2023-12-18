@@ -42,7 +42,6 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    @Cacheable("models")
     public ModelDto getModelByName(String name) {
         return modelMapper.map(modelRepository.findByName(name), ModelDto.class);
     }
@@ -74,7 +73,6 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    @Cacheable("models")
     public List<BrandDto> showBrand() {
         return brandRepository.findAll().stream().map(brand -> modelMapper.map(brand, BrandDto.class)).collect(Collectors.toList());
     }

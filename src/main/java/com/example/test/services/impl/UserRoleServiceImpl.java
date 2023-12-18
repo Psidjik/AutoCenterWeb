@@ -34,7 +34,6 @@ public class UserRoleServiceImpl implements UserRoleService {
         userRoleRepository.saveAndFlush(userRole);
     }
     @Override
-    @Cacheable("roles")
     public UserRoleDto getUserRoleById(String id){
         return modelMapper.map(userRoleRepository.findById(id), UserRoleDto.class);
     }
@@ -60,7 +59,6 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    @Cacheable("roles")
     public List<UserRoleDto> getAllUserRoleByName(String name) {
         return null;
     }
